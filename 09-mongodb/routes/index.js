@@ -10,8 +10,10 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+// Get Data
 router.get('/get-data', function(req, res, next) {
   var resultArray = []
+  
   mongo.connect(url, function(err, client) {
     assert.equal(null, err);
     var db = client.db('test');
@@ -22,10 +24,11 @@ router.get('/get-data', function(req, res, next) {
     }, function() {
       client.close();
       res.render('index', { items: resultArray });
-    })
-  })
-})
+    });
+  });
+});
 
+// Post Data
 router.post('/insert', function(req, res, next) {
   var item = {
     title: req.body.title,
@@ -41,8 +44,7 @@ router.post('/insert', function(req, res, next) {
       console.log('Item inserted');
       client.close();
     });
-  })
-
+  });
   res.redirect('/');
 });
 
